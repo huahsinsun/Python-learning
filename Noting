@@ -1,0 +1,241 @@
+"""
+Python 学习笔记
+
+本笔记涵盖了以下关键知识点：
+1. PyCharm 全局查找
+2. 格式化字符串
+3. 折叠区
+4. 位移操作
+5. 数字表示及转换
+6. 按位运算与逻辑运算
+7. 流程控制
+8. 函数
+"""
+
+# 1. PyCharm 全局查找
+"""
+通过双击 Shift 键，可以在 PyCharm 中进行全局查找，这是一种高效的代码导航方式。
+"""
+
+# 库函数帮助
+import sys
+print(sys.__doc__)
+
+# 2. 格式化字符串
+"""
+使用 format 方法可以格式化字符串，{} 用于占位符，{b="sister"} 用于命名参数。
+"""
+print('{} is our {b}'.format('Amy', b="sister"))
+
+# 3. 折叠区
+"""
+在代码中使用 #region 和 #endregion 可以创建折叠区域，方便代码管理和阅读。
+"""
+ex = ['#region', '#endregion']
+
+# 4. 位移操作
+"""
+<< 为左移操作，相当于乘以2。
+>> 为右移操作，相当于除以2。
+"""
+x = 3
+print(x << 1)  # 输出: 6，相当于 3 * 2
+print(x << 2)  # 输出: 12，相当于 3 * 4
+
+x = 20
+print(x >> 1)  # 输出: 10，相当于 20 // 2
+print(x >> 2)  # 输出: 5，相当于 20 // 4
+
+# 5. 数字表示及转换
+"""
+print 函数默认转换为 10 进制
+二进制: 0b1000      二进制: 0b101
+八进制: 0o10        八进制: 0o5
+十进制: 8           十进制: 5
+十六进制: 0x8       十六进制: 0x5
+"""
+print(8)
+print(bin(8))  # 输出二进制
+print(oct(8))  # 输出八进制
+print(hex(8))  # 输出十六进制
+print(0x8)  # print 函数默认转换为 10 进制
+
+binary_str = '0b101'
+print(int(binary_str, 2))  # 输出: 5
+
+# 6. 按位运算与逻辑运算
+"""
+按位运算:
+    & (与)
+    | (或)
+    ~ (非)
+    ^ (异或)
+逻辑运算:
+    and
+    or
+    not
+布尔运算:
+    短路运算 (short-circuit evaluation)
+    等于 (==) 返回 True 或 False
+    不等于 (!=) 返回 True 或 False
+"""
+print("请注意按位与和逻辑与的不同, 按位是在二进制的基础上的")
+print("十进制: {}, 二进制: {}".format(8, bin(8)))
+print("十进制: {}, 二进制: {}".format(5, bin(5)))
+print("按位 8 与 5: {}, 按位 8 或 5: {}, 按位非 8: {}".format(8 & 5, 8 | 5, ~8))
+
+print("布尔运算示例")
+print(not 5, not [1, 2, 3])  # not 返回布尔类型
+print(4 and 5, 0 and 6, 4 and 0)  # 短路求值
+print(7 or 2 > 5, 0 < -5 or 5)
+
+#region 流程控制
+"""
+流程控制:
+if 语句可以有 elif 和 else 部分，但它们都是可选的。
+while 循环中可以使用 else 从句。
+for...in 可以在任何序列上工作。
+break 语句用于跳出循环，continue 语句用于跳过当前循环的剩余部分并进入下一次循环。
+"""
+
+# 猜数字游戏
+# while True:
+#     num = int(input("输入数字: 0-100"))
+#     if num == 25:
+#         print("right!")
+#         break
+#     elif num < 25:
+#         print("小了")
+#     elif num > 25:  # 也可以用 else 收尾
+#         print("大了")
+
+# if 语句最小单元示例
+if 2 < 5:
+    print(1)
+
+# while 循环与 else 从句
+# while True:
+#     s = input('Enter something: ')
+#     if s == 'quit':
+#         break
+#     if len(s) < 3:
+#         print('Too small')
+#         continue
+#     print('Input is of sufficient length')
+    # 自此处起继续进行其它任何处理
+#endregion
+
+#region 函数
+"""
+函数:
+1. 形式参数和实参
+2. 全局变量与局部变量
+3. 默认参数
+4. 多变量参数和关键字参数
+"""
+
+print("{}关于函数的学习{}".format('*'*30, '*'*30))
+
+# 1. 形式参数和实参
+"""
+在定义函数时给定的名称称作“形参”（Parameters），调用函数所提供给函数的值称作“实参”（Arguments）。
+"""
+def fun(a, b):
+    return a + b
+
+print(fun(a=2, b=5))  # 输出: 7
+
+#region 全局变量与局部变量
+
+# 2. 全局变量与局部变量
+"""
+全局变量是在函数之外定义的变量，可以在整个程序中访问。局部变量是在函数内部定义的变量，只在函数内部可见。
+"""
+x = 10  # 全局变量
+
+def func_global_access():
+    print(x)  # 访问全局变量
+
+func_global_access()  # 输出: 10
+print(x)  # 输出: 10
+
+# 局部变量
+def func_local_var():
+    y = 5  # 局部变量
+    print(y)
+
+func_local_var()  # 输出: 5
+# print(y)  # 会报错，因为 y 是局部变量，函数外不可见
+
+# 修改全局变量
+def func_modify_global():
+    global x  # 声明使用全局变量 x
+    x = 20  # 修改全局变量 x
+
+func_modify_global()
+print(x)  # 输出: 20
+
+# 访问全局变量但不修改
+def func_access_global():
+    print(x)  # 访问全局变量
+
+func_access_global()  # 输出: 20
+
+# 局部和全局变量同名
+x = 10  # 全局变量
+
+def func_same_name():
+    x = 5  # 局部变量
+    print(x)  # 输出: 5，优先使用局部变量
+
+func_same_name()
+print(x)  # 输出: 10，全局变量未被修改
+
+#endregion
+
+# 3. 默认参数
+"""
+函数的默认参数必须放在非默认参数之后。
+"""
+def func(a, b=20):
+    return a + b
+
+print(func(5))  # 输出: 25
+
+# 4. 多变量参数和关键字参数
+"""
+多变量参数和关键字参数：
+*args：用于接收任意数量的位置参数，并将其作为元组传递。
+**kwargs：用于接收任意数量的关键字参数，并将其作为字典传递。
+"""
+# *args 示例：接受任意数量的元组
+def func(*params):
+    for i in params:
+        print(i)
+
+func(1, 2, 3, 4)
+
+# **kwargs 示例：接受任意数量的字典
+def func2(**dic):
+    for key, value in dic.items():
+        print("字典可变参数")
+        print("{} to {}".format(key, value))
+
+func2(name="Alice", age=30, osk=123, bb=25)
+
+# 同时使用 *args 和 **kwargs
+def total(a=5, *numbers, **phonebook):
+    print('a', a)
+    # 遍历元组中的所有项目
+    for single_item in numbers:
+        print('single_item', single_item)
+    # 遍历字典中的所有项目
+    for first_part, second_part in phonebook.items():
+        print(first_part, second_part)
+
+print(total(10, 1, 2, 3, Jack=1123, John=2231, Inge=1560))
+#endregion
+
+"""
+将本笔记保存为一个 .py 文件，并在 PyCharm 中打开进行学习和复习。
+"""
