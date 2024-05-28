@@ -11,6 +11,9 @@ Python 学习笔记
 6. 按位运算与逻辑运算
 7. 流程控制
 8. 函数
+9.python遵循半开区间,左闭右开
+10.数据结构
+11.补充
 """
 # 0.获取帮助
 """
@@ -32,7 +35,8 @@ print(sys.__doc__)
 
 # 2. 格式化字符串
 """
-使用 format 方法可以格式化字符串，{} 用于占位符，{b="sister"} 用于命名参数。
+1.使用 format 方法可以格式化字符串，{} 用于占位符，{b="sister"} 用于命名参数。
+2.print默认结束为\n,可以指定为控
 """
 print('{} is our {b}'.format('Amy', b="sister"))
 
@@ -151,7 +155,9 @@ print("{}关于函数的学习{}".format('*'*30, '*'*30))
 """
 def fun(a, b):
     return a + b
-
+def fun1(a,b):
+    return (a,a+b,a+b+c)#多参数返回
+#a, b = <some expression>  的用法会将表达式的结果解释为具有两个值的一个元组。
 print(fun(a=2, b=5))  # 输出: 7
 
 #region 全局变量与局部变量
@@ -216,15 +222,16 @@ print(func(5))  # 输出: 25
 多变量参数和关键字参数：
 *args：用于接收任意数量的位置参数，并将其作为元组传递。
 **kwargs：用于接收任意数量的关键字参数，并将其作为字典传递。
+                           *args 和 **kwargs 用于处理不确定数量的参数                 
 """
-# *args 示例：接受任意数量的元组
+# *args 示例：星号 * 表示这个函数可以接受任意数量的参数，这些参数会被收集到一个元组（tuple）中
 def func(*params):
     for i in params:
         print(i)
 
 func(1, 2, 3, 4)
 
-# **kwargs 示例：接受任意数量的字典
+# **kwargs 示例：双星号 ** 表示这个函数可以接受任意数量的关键字参数，这些参数会被收集到一个字典（dictionary）中，命名为 dic。
 def func2(**dic):
     for key, value in dic.items():
         print("字典可变参数")
@@ -244,7 +251,401 @@ def total(a=5, *numbers, **phonebook):
 
 print(total(10, 1, 2, 3, Jack=1123, John=2231, Inge=1560))
 #endregion
+# 在函数定义中使用 * 和 **
+# *args 用于接收任意数量的位置参数，并将它们打包成一个元组
+def example_with_args(*args):
+    print("args:", args)
+# **kwargs 用于接收任意数量的关键字参数，并将它们打包成一个字典
+def example_with_kwargs(**kwargs):
+    print("kwargs:", kwargs)
+# 同时接收位置参数和关键字参数
+def example_with_both(*args, **kwargs):
+    print("args:", args)
+    print("kwargs:", kwargs)
+# 在函数调用中使用 * 和 **
+# *args 用于将一个元组解包为位置参数
+args = (1, 2, 3)
+example_with_args(*args)
+# 输出: args: (1, 2, 3)
+# **kwargs 用于将一个字典解包为关键字参数
+kwargs = {'a': 1, 'b': 2, 'c': 3}
+example_with_kwargs(**kwargs)
+# 输出: kwargs: {'a': 1, 'b': 2, 'c': 3}
+# 同时使用 * 和 ** 解包元组和字典
+example_with_both(*args, **kwargs)
+# 输出:
+# args: (1, 2, 3)
+# kwargs: {'a': 1, 'b': 2, 'c': 3}
+# 在函数定义中，* 和 ** 用于打包参数
+# *args：在函数定义中，*args 用于接收任意数量的位置参数，并将它们打包成一个元组。
+# **kwargs：在函数定义中，**kwargs 用于接收任意数量的关键字参数，并将它们打包成一个字典。
+# 在函数调用中，* 和 ** 用于解包参数
+# *args：在函数调用中，*args 用于将一个元组解包为位置参数。
+# **kwargs：在函数调用中，**kwargs 用于将一个字典解包为关键字参数。
+
+# 例子:打包与解打包
+def fs(*s): #*s:输入s的数据进行打包
+    print(type(s))
+    print(s)
+    for i in s:
+        print(i)
+a=(1,2,3,4)
+fs(*a) # *a 解打包
+
+"""模块Module学习
+0.一个py文件就是一个模块
+1.sys.path 是一个包含搜索模块的目录路径的列表。
+2.模块的__name__
+3.包:包是指一个包含模块与一个特殊的  __init__.py  文件的文件夹
+后者向 Python 表明这一文件夹是特别的，因为其包含了 Python 模块。
+结构:
+<some folder present in the sys.path>/
+    world/
+        __init__.py
+        asia/
+            __init__.py
+            india/
+                __init__.py
+                foo.py
+        africa/
+            __init__.py
+            madagascar/
+                __init__.py
+                bar.py
+"""
+#半开区间说明
+print("python遵循半开区间,左闭右开")
+todo=['hi',1,2,3,4,5]#索引0-5
+print(todo[1:3])
+print(todo[:3])
+print(todo[3:])
+"""
+            参见:变量引用与对象绑定
+数据结构 
+List列表 []   可切片 可编辑  a=[] a=[1]
+Tuple元组 ()  可切片(间接编辑) 不可编辑(修改,加,减) a=() a=(1,)
+Dict字典 {}  将key与value唯一的联系在一起,key只能是不可变的(字符串,元组..)
+    d = {key: value1, key2: value2}
+    键和值之间用冒号分隔，每对键值对之间用逗号分隔，所有键值对都用花括号括起。
+Set集合 {非空}  set()
+字符串 str类
+"""
+"""列表"""
+# 创建
+lst = [1, 2, 3]  # 使用方括号创建列表
+empty_lst = []  # 创建一个空列表
+# 访问
+first = lst[0]  # 访问第一个元素
+last = lst[-1]  # 访问最后一个元素
+# 切片
+sub_lst = lst[1:3]  # 获取子列表，包括索引1，不包括索引3
+# 修改元素
+lst[0] = 10  # 将第一个元素修改为10
+
+# 拼接
+new_lst = lst + [4, 5, 6]  # 拼接两个列表
+#复制
+lst_2=lst[:]#变量引用与对象绑定,参见
+# 重复
+repeated_lst = lst * 2  # 重复列表两次
+# 检查元素存在
+is_in = 99 in lst  # 检查99是否在列表中
+# 长度
+length = len(lst)  # 获取列表长度
+
+# 遍历列表
+print("Items in list:")
+for item in lst:
+    print(item)
+
+# 列表方法
+lst.append(4)  # 在列表末尾添加一个元素
+lst.insert(1, 99)
+lst.extend([5, 6])  # 用可迭代对象扩展列表
+
+del lst[2]  # 删除索引为2的元素
+lst.remove(99)  # 删除列表中第一个匹配的元素
+last_item = lst.pop()  # 删除并返回最后一个元素
+lst.clear()  # 清空列表
+
+# 方法 index count
+lst = [10, 2, 2, 5, 6]
+index_of_2 = lst.index(2)  # 返回列表中第一个匹配的元素的索引
+count_of_2 = lst.count(2)  # 返回列表中某个元素出现的次数
+lst.sort()  # 对列表进行排序
+lst.reverse()  # 反转列表的元素
+# 列表推导式
+squares = [x**2 for x in range(10)]  # 创建一个包含0到9的平方数的列表
+#[expression for item in iterable] expression 是一个表达式，用于生成列表元素。item 是从 iterable 中取出的每一个元素。
+# iterable 是一个可迭代对象，比如列表、字符串、元组、范围（range）等。
+
+# 内置函数
+total = sum(lst)  # 返回列表中所有元素的和
+min_val = min(lst)  # 返回列表中的最小值
+max_val = max(lst)  # 返回列表中的最大值
+# 将其他可迭代对象转换为列表
+str_lst = list("hello")  # 将字符串转换为列表
+print("String to list: {}".format(str_lst))
+
+
+"""元组:不可修改"""
+#空元组和单元元组
+tup = ()
+tup_1 = (1,)#逗点
+Tup = (1,2,'h','r',9)
+#切片与访问
+print(Tup[:],Tup[:3])
+
+# 尝试修改元素会引发错误 Tup[0]=5
+
+# 连接+与复制*
+tuple1 = (1, 2, 3)
+tuple2 = ('a', 'b', 'c')
+combined_tuple = tuple1 + tuple2
+copied_tuple = combined_tuple * 2
+
+#检查元素
+example_tuple = (1, 2, 3, 'a', 'b', 'c')
+print(2 in example_tuple)  # 输出: True
+print('d' in example_tuple)  # 输出: False
+
+#遍历
+example_tuple = (1, 2, 3, 'a', 'b', 'c')
+for element in example_tuple:
+    print(element)
+
+#解包
+example_tuple = (1, 2, 3)
+a, b, c = example_tuple
+print(a, b, c)  # 输出: 1 2 3
+
+# 你可以使用星号 `*` 进行部分解包
+example_tuple = (1, 2, 3, 4, 5)
+a, *b, c = example_tuple
+print(a)  # 输出: 1
+print(b)  # 输出: [2, 3, 4]
+print(c)  # 输出: 5
+
+#方法 index&count
+example_tuple = (1, 2, 3, 2, 2, 4)
+print("method")
+print(example_tuple.count(2))  # 输出: 3
+print(example_tuple.index(3))  # 输出: 2
+#元组转换
+a=[1,5,6,85,6,5,65,6]
+tuple(a)
+
+"""字典 唯一的键值对,键不可变"""
+# 创建字典
+Dict={}#空字典
+Dict = {'a': 1, 'b': 2, 'c': 3}
+print(Dict)  # 输出: {'a': 1, 'b': 2, 'c': 3}
+# 使用 dict() 函数创建字典
+Dict2 = dict(a=1, b=2, c=3)
+print(Dict2)  # 输出: {'a': 1, 'b': 2, 'c': 3}
+
+
+# 访问字典中的值
+v = Dict['a']
+print(v)  # 输出: 1
+
+# 使用 .get() 方法避免 KeyError
+v = Dict.get('b')
+print(v)  # 输出: 2
+# 键不存在时返回 None
+v = Dict.get('d')
+print(v)  # 输出: None
+# 键不存在时返回指定的默认值
+v = Dict.get('d', 'default')
+print(v)  # 输出: default
+
+# 修改
+Dict['a'] = 100
+print(Dict)  # 输出: {'a': 100, 'b': 2, 'c': 3}
+# 添加新的键值对
+Dict['d'] = 4
+print(Dict)  # 输出: {'a': 100, 'b': 2, 'c': 3, 'd': 4}
+# 使用 update() 方法更新字典
+Dict.update({'e': 5, 'f': 6})
+print(Dict)  # 输出: {'a': 100, 'd': 4, 'e': 5, 'f': 6}
+
+# 删除字典中的键值对
+del Dict['b']
+# 使用 pop() 方法删除键值对并返回被删除的值
+v = Dict.pop('c')
+print(v)  # 输出: 3
+print(Dict)  # 输出: {'a': 1}
+
+# 遍历字典的键
+for key in Dict:
+    print(key)
+# 遍历字典的值
+for value in Dict.values():
+    print(value)
+# 遍历字典的键和值
+for key, value in Dict.items():
+    print(f"Key: {key}, Value: {value}")
+#或者
+for idx,(key,value) in enumerate(Dict.items()):
+    print("Attention!")
+    print(idx,key,value)
+
+# 字典的常用方法
+print(Dict.keys())  # 输出: dict_keys(['a', 'd']) 类方法
+print(Dict.values())  # 输出: dict_values([100, 4])
+print(Dict.items())  # 输出: dict_items([('a', 100), ('d', 4)])
 
 """
-将本笔记保存为一个 .py 文件，并在 PyCharm 中打开进行学习和复习。
+集合Set
+集合（Set）是简单对象的无序集合（Collection）,当集合中的项目 存在 与否比起次序或其出现次数更加重要时
 """
+# 使用大括号创建集合
+fruits = {"apple", "banana", "cherry"}
+# 使用 set() 函数创建集合
+numbers = set([1, 2, 3, 4, 5])
+# 创建空集合
+empty_set = set()
+fruits = {"apple", "banana", "cherry"}
+# 创建一个包含平方数的集合
+squares = {x**2 for x in range(1, 6)}
+print(squares)  # 输出: {1, 4, 9, 16, 25}
+
+# 添加元素
+fruits.add("orange")
+print(fruits)  # 输出: {'banana', 'apple', 'cherry', 'orange'}
+# 删除元素
+fruits.remove("banana")
+# 使用 discard 删除元素
+fruits.discard("apple")
+# 使用 pop 删除并返回一个随机元素
+removed_element = fruits.pop()
+print(removed_element)
+print(fruits)
+
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5, 6}
+
+# 并集
+union_set = set1 | set2
+print(union_set)  # 输出: {1, 2, 3, 4, 5, 6}
+# 交集
+intersection_set = set1 & set2
+print(intersection_set)  # 输出: {3, 4}
+# 差集
+difference_set = set1 - set2
+print(difference_set)  # 输出: {1, 2}
+# 对称差集
+symmetric_difference_set = set1 ^ set2
+print(symmetric_difference_set)  # 输出: {1, 2, 5, 6}
+
+fruits = {"apple", "banana", "cherry"}
+
+# 元素个数
+print(len(fruits))  # 输出: 3
+# 检查元素是否存在
+print("apple" in fruits)  # 输出: True
+print("grape" in fruits)  # 输出: False
+# 清空集合
+fruits.clear()
+# 复制集合
+fruits = {"apple", "banana", "cherry"}
+fruits_copy = fruits.copy()
+
+#Usage
+# 使用集合去重
+numbers = [1, 2, 2, 3, 4, 4, 5]
+unique_numbers = list(set(numbers))
+print(unique_numbers)  # 输出: [1, 2, 3, 4, 5]
+# 成员检测性能
+numbers_set = set(range(1000000))
+print(999999 in numbers_set)  # 输出: True
+# 示例：快速查找和去重
+emails = ["a@example.com", "b@example.com", "a@example.com", "c@example.com"]
+unique_emails = set(emails)
+print("b@example.com" in unique_emails)  # 输出: True
+print(unique_emails)  # 输出: {'a@example.com', 'b@example.com', 'c@example.com'}
+
+""""11"""
+"""
+1.变量引用与对象绑定
+当你创建了一个对象并将其分配给某个变量时，变量只会查阅（Refer）某个对象，并且它也不会代表对象本身。
+也就是说，变量名只是指向你计算机内存中存储了相应对象的那一部分。这叫作将名称绑定（Binding）给那一个对象。
+但是,a=4,b=a,a=1,b还是4.因为int为不可变类型,list是可变类型
+"""
+# 示例：变量引用与对象绑定
+a = [1, 2, 3]  # 创建一个列表对象，并将变量名 'a' 绑定到该对象
+b = a          # 将变量名 'b' 绑定到与 'a' 相同的对象
+# 修改通过 'a' 或 'b' 都会反映到同一个列表对象
+a.append(4)
+print("列表 a:", a)  # 输出: [1, 2, 3, 4]
+print("列表 b:", b)  # 输出: [1, 2, 3, 4]
+"""
+# 列表切片与副本
+在Python中，列表切片（slicing）可以用来创建一个列表的副本。通过这种方法，你可以创建一个新的列表对象，
+其中包含原列表的所有元素。这对于避免修改原列表时的副作用非常有用。
+"""
+# 创建一个原始列表
+original_list = [1, 2, 3, 4, 5]
+# 通过切片制作列表的副本
+copied_list = original_list[:]  # 使用切片操作符 [:] 创建一个包含原始列表所有元素的新列表
+# 修改副本不会影响原列表
+copied_list.append(6)  # 在副本列表中添加一个新元素
+# 打印原始列表和副本列表以查看它们是否独立
+print("原始列表:", original_list)  # 输出: [1, 2, 3, 4, 5]
+print("副本列表:", copied_list)     # 输出: [1, 2, 3, 4, 5, 6]
+# 验证独立性：检查内存地址
+print("原始列表的内存地址:", id(original_list))
+print("副本列表的内存地址:", id(copied_list))
+# 通过内存地址可以确认，两个列表是不同的对象
+
+
+"""2.可变与不可变 list,dict都可以在func内变化 ,int不行.
+改变输入必须赋全局变量"""
+Dict =[1,2,3,4]
+#or dict={'a'=1,"b"=99} 都可以
+def invert_dict(d):
+    print("before change:{}".format(d))
+    d.append(112)
+    print("after:{}".format(d))
+invert_dict(Dict)
+print(Dict)
+#这个就变了
+
+#look
+#题目7: 编写一个函数 invert_dict(d)，将字典的键和值互换，并返回新的字典。
+Dict = {'a': 1}
+def invert_dict(d):
+    print("before change:{}".format(d))
+    inv={}
+    for key,values in d.items():
+        key,values=values,key#确实变了,但是之后调用的还是外部的
+    print("after:{}".format(d))
+    print(inv)
+invert_dict(Dict)
+#这个就没变
+
+Dict = {'a': 1, 'b': 99}
+
+def invert_dict_in_place(d):
+    print("Before change:", d)
+    keys = list(d.keys())
+    for key in keys:
+        value = d.pop(key)
+        d[value] = key
+    print("After change:", d)
+
+invert_dict_in_place(Dict)
+print("Outside the function:", Dict)
+
+"""
+可变对象：如列表和字典，在函数内修改其内容会影响到外部变量。
+不可变对象：如整数和字符串，在函数内不能直接修改其内容，如果需要修改，必须重新赋值。
+创建新对象：如果在函数内创建新的对象（如新的字典），不会影响传入的原始对象
+"""
+
+"""
+3.要注意到  a, b = <some expression>  的用法会将表达式的结果解释为具有两个值的一个元组。
+"""
+a=12
+b=3
+a,b=b,a
